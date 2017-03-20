@@ -10,11 +10,15 @@
    如果指定单词库，单词库在文件夹wordsRepo, 加上"-w wordsRepo/文件", 默认使用5000的。
    
    或者对多个字幕转换 python main.py *.srt 
+   
+   如果希望是英文释义，在命令行加上 "-e"
 
 ## 词库有[5000](http://www.wordfrequency.info/free.asp),[10000](https://github.com/first20hours/google-10000-english)
 
 
 ## To do 
-1. [ ] 英文释义选择
+1. [x] 英文释义选择
 
 2. [x] 批量转换
+
+3. [ ] 可以放到一个网页，使用的人可以不用安装python，只需上传下载。
