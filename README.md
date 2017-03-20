@@ -7,7 +7,7 @@
 1. pip install -r requirements.txt
 2. python main.py zimu.srt
 
-## 词库有5000,10000
+## 词库有[5000](http://www.wordfrequency.info/free.asp),[10000](https://github.com/first20hours/google-10000-english)
 
 
 ## To do 
