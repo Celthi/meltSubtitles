@@ -12,7 +12,6 @@ def parse_args():
     parser = argparse.ArgumentParser(description = 'melt subtitles')
 
     parser.add_argument('subtitle',
-                        dest='subtitle',
                         nargs='+',
                         help='subtitle')
 

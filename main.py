@@ -3,16 +3,7 @@ __author__ = 'celhipc'
 import requests
 import lxml.html as htmlparser
 from utils import  parse_args
-
-
-def process_subtitle(subFile):
-    """process the subtile
-
-    :param subFile:
-    :return:
-    """
-    pass
-
+from wordsRepoProc import build_wordrepo
 
 def translate2chinese(word):
     """
@@ -26,7 +17,7 @@ def translate2chinese(word):
     webpage = get_page(url, word)
     htmltree = htmlparser.fromstring(webpage)
     meanningList = htmltree.xpath('//div[@class="trans-container"]/ul/li')
-    if not meanningList:
+    if len(meanningList) != 0:
         meanning = meanningList[0].text;
 
     return meanning
@@ -64,17 +55,30 @@ def main():
     subtitle = args.subtitle
 
     ##
+    ## build the words repo
+    files = ['./wordsRepo/en5000x.csv']
+    wordsRepo = build_wordrepo(files)
     for subtitleFile in subtitle:
-        with open(subtitleFile, 'r') as finput:
-            subMelted = subtitleFile[:-4] + '.wordcn.srt'
-            with open(subMelted, 'a') as fouput:
-                for line in subtitleFile:
+        if not subtitleFile.endswith('.srt'):
+            pass
 
-
-                    pass
-
-
+        srtfile = subtitleFile
+        with open(srtfile, 'r', encoding='utf-8') as finput:
+            subMelted = srtfile[:-4] + '.wordcn.srt'
+            with open(subMelted, 'w', encoding='utf-8') as fouput:
+                for line in finput:
+                    if line and line[0].isalpha():
+                        words = line.split()
+                        for word in words:
+                            if word and word[0].islower() and word not in wordsRepo:
+                                meanning = translate2chinese(word)
+                                fouput.write(word+":"+meanning)
+                        fouput.write('\n')
+                    else:
+                        fouput.write(line)
 
 
 if __name__ == '__main__':
     print('procwssing subtitle')
+    main()
+    print('finished procwssing subtitle')
