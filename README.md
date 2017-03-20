@@ -3,11 +3,13 @@
 [只留字幕中的生词，并翻译](https://zhuanlan.zhihu.com/p/25854872)
 
 ## 安装和使用
-1 pip install -r requirements.txt
-2 python main.py zimu.srt
+1. pip install -r requirements.txt
+2. python main.py zimu.srt
 
 
-##To do 
+## To do 
 1. 批量转换
+
 2. 英文释义选择
+
 3. 转换速度提升
