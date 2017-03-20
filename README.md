@@ -2,6 +2,13 @@
 
 [只留字幕中的生词，并翻译](https://zhuanlan.zhihu.com/p/25854872)
 
+## 思路
+    1. 词库假定是你认识的单词
+    2. 将字幕中在单词中的单词去掉，
+    3. 通过查询有道网页得到生词的释义
+    4. 将释义加入到新的字幕文件中，
+    5. done
+
 ## 安装和使用
 0. 安装python 2.7.9 以上，推荐[python 3.5](https://www.python.org/downloads/release/python-353)
 1. pip install -r requirements.txt 
@@ -22,3 +29,4 @@
 2. [x] 批量转换
 
 3. [ ] 可以放到一个网页，使用的人可以不用安装python，只需上传下载。
+4. [ ] 可以用map函数式的思想减少for的使用
