@@ -59,7 +59,6 @@ def main():
     ## build the words repo
     files = ['./wordsRepo/en5000x.csv']
     wordsRepo = build_wordrepo(files)
-    ##rgx = re.compile("([\w]+)")
     for subtitleFile in subtitle:
         if not subtitleFile.endswith('.srt'):
             pass
@@ -70,11 +69,11 @@ def main():
             with open(subMelted, 'w', encoding='utf-8') as fouput:
                 for line in finput:
                     if line and line[0].isalpha():
-                        words = re.split(r"[^a-zA-Z]+", line)
+                        words = re.split(r"[^a-zA-Z']+", line)
                         for word in words:
-                            if word and word[0].islower() and word not in wordsRepo:
+                            if word and word[0].islower() and word not in wordsRepo and "'" not in word:
                                 meanning = translate2chinese(word)
-                                fouput.write(word+":"+meanning)
+                                fouput.write(word+": "+meanning)
                         fouput.write('\n')
                     else:
                         fouput.write(line)
