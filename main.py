@@ -29,7 +29,15 @@ def translate2english(word):
     :param words:
     :return:
     """
-    pass
+    meanning = ''
+    url = 'http://dict.youdao.com/search?q='
+    webpage = get_page(url, word)
+    htmltree = htmlparser.fromstring(webpage)
+    meanningList = htmltree.xpath('//*[@id="tEETrans"]/div/ul//*[@class="def"]')
+    if len(meanningList) != 0:
+        meanning = meanningList[0].text;
+
+    return meanning
 
 
 def get_page(url, word):
@@ -65,14 +73,21 @@ def main():
 
         srtfile = subtitleFile
         with open(srtfile, 'r', encoding='utf-8') as finput:
-            subMelted = srtfile[:-4] + '.wordcn.srt'
+            lan = 'ch'
+            if not args.ch:
+                lan = 'en'
+            subMelted = srtfile[:-4] + '.word' + lan + '.srt'
             with open(subMelted, 'w', encoding='utf-8') as fouput:
                 for line in finput:
                     if line and not line[0].isdigit():
                         words = re.split(r"[^a-zA-Z']+", line)
                         for word in words:
                             if word and word[0].islower() and word not in wordsRepo and "'" not in word:
-                                meanning = translate2chinese(word)
+                                meanning =''
+                                if args.ch:
+                                    meanning = translate2chinese(word)
+                                else:
+                                    meanning = translate2english(word)
                                 fouput.write(word+": "+meanning)
                         fouput.write('\n')
                     else:
