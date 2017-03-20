@@ -2,6 +2,7 @@ __author__ = 'celhipc'
 
 import requests
 import lxml.html as htmlparser
+import re
 from utils import  parse_args
 from wordsRepoProc import build_wordrepo
 
@@ -58,6 +59,7 @@ def main():
     ## build the words repo
     files = ['./wordsRepo/en5000x.csv']
     wordsRepo = build_wordrepo(files)
+    ##rgx = re.compile("([\w]+)")
     for subtitleFile in subtitle:
         if not subtitleFile.endswith('.srt'):
             pass
@@ -68,7 +70,7 @@ def main():
             with open(subMelted, 'w', encoding='utf-8') as fouput:
                 for line in finput:
                     if line and line[0].isalpha():
-                        words = line.split()
+                        words = re.split(r"[^a-zA-Z]+", line)
                         for word in words:
                             if word and word[0].islower() and word not in wordsRepo:
                                 meanning = translate2chinese(word)
