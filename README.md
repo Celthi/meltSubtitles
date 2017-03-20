@@ -7,10 +7,10 @@ python 2.7.9 以上
 1. pip install -r requirements.txt
 2. python main.py zimu.srt
 
+## 词库有5000,10000
+
 
 ## To do 
-1. 批量转换
+1. [] 英文释义选择
 
-2. 英文释义选择
-
-3. 转换速度提升
+2. [] 转换速度提升
