@@ -69,7 +69,7 @@ def main():
             subMelted = subtitleFile[:-4] + '.wordcn.srt'
             with open(subMelted, 'a') as fouput:
                 for line in subtitleFile:
-                    
+
 
                     pass
 

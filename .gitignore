@@ -1,8 +1,6 @@
 *.pyc
 *.pyo
 *~
-*.DS_Store
-wine-py2exe/
 py2exe.log
 *.kate-swp
 *.egg-info
@@ -17,6 +15,5 @@ py2exe.log
 *.swp
 test/testdata
 .tox
-youtube-dl.zsh
 .idea
 .idea/*
