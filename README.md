@@ -7,7 +7,7 @@
 1. pip install -r requirements.txt 
 2. python main.py zimu.srt -w 单词库
 
-   如果不指定单词库，默认使用5000的。
+   单词库在文件夹wordsRepo, 如果不指定单词库，默认使用5000的。
    
    或者对多个字幕转换 python main.py *.srt -w ./wordsRepo/en5000x.csv
 
