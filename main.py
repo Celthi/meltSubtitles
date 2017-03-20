@@ -57,7 +57,7 @@ def main():
 
     ##
     ## build the words repo
-    files = ['./wordsRepo/en5000x.csv']
+    files = args.wordsrepo
     wordsRepo = build_wordrepo(files)
     for subtitleFile in subtitle:
         if not subtitleFile.endswith('.srt'):

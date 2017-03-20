@@ -15,6 +15,13 @@ def parse_args():
                         nargs='+',
                         help='subtitle')
 
+    parser.add_argument('-w',
+                        dest='wordsrepo',
+                        action='store',
+                        nargs='+',
+                        default=['./wordsRepo/en5000x.csv'],
+                        help='specify the words repo')
+
     parser.add_argument('-o',
                         '--overwrite',
                         dest='overwrite',
