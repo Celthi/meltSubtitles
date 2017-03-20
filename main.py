@@ -68,7 +68,7 @@ def main():
             subMelted = srtfile[:-4] + '.wordcn.srt'
             with open(subMelted, 'w', encoding='utf-8') as fouput:
                 for line in finput:
-                    if line and line[0].isalpha():
+                    if line and not line[0].isdigit():
                         words = re.split(r"[^a-zA-Z']+", line)
                         for word in words:
                             if word and word[0].islower() and word not in wordsRepo and "'" not in word:

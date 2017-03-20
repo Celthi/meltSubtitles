@@ -12,6 +12,7 @@ def build_wordrepo(files):
     :return wordsrepo: a set
     """
     wordsRepo = set()
+
     for file in files:
         with open(file, 'r') as finput:
             reader = csv.reader(finput)
