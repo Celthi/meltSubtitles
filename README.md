@@ -27,10 +27,13 @@
 
 
     如果指定单词库，单词库在文件夹wordsRepo, 加上"-w wordsRepo/文件", 默认使用5000的。
+    
+    如果指定文件夹,命令行加上"--path 文件夹"
    
     或者对多个字幕转换 python main.py *.srt 
    
     如果希望是英文释义，在命令行加上 "-e"
+    
     如果是二刷，在命令行加上 "-2"
 
 ## 词库有[5000](http://www.wordfrequency.info/free.asp),[10000](https://github.com/first20hours/google-10000-english)

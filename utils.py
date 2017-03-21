@@ -1,7 +1,22 @@
 import argparse
+import errno
+import os
 
 __author__ = 'celhipc'
 
+
+def mkdir(path, mode=0o777):
+    """
+    Create subdirectory hierarchy given in the paths argument.
+    Ripped from https://github.com/coursera-dl/
+    """
+    try:
+        os.makedirs(path, mode)
+    except OSError as exc:
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else:
+            raise
 
 def parse_args():
     """
@@ -33,6 +48,12 @@ def parse_args():
                         nargs='+',
                         default=['./wordsRepo/en5000x.csv'],
                         help='specify the words repo')
+
+    parser.add_argument('--path',
+                        dest='path',
+                        action='store',
+                        default='.',
+                        help='path to save the files')
 
     parser.add_argument('-o',
                         '--overwrite',

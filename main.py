@@ -1,10 +1,11 @@
-__author__ = 'celhipc'
-
 import requests
 import lxml.html as htmlparser
 import re
-from utils import  parse_args
+import os
+from utils import  parse_args, mkdir
 from wordsRepoProc import build_wordrepo
+
+__author__ = 'celhipc'
 
 def translate2chinese(word):
     """
@@ -59,14 +60,18 @@ def main():
     :return:
     """
 
-    ## parse argument
+    # parse argument
     args = parse_args()
     subtitle = args.subtitle
     sectime = args.sec
+    files = args.wordsrepo
+    dir = args.path
+
+    if not os.path.exists(dir):
+        mkdir(dir)
 
     ##
     ## build the words repo
-    files = args.wordsrepo
     wordsRepo = build_wordrepo(files)
     for subtitleFile in subtitle:
         if not subtitleFile.endswith('.srt'):
@@ -77,7 +82,7 @@ def main():
             lan = 'ch'
             if not args.ch:
                 lan = 'en'
-            subMelted = srtfile[:-4] + '.word' + lan + '.srt'
+            subMelted = os.path.join(dir, srtfile[:-4] + '.word' + lan + '.srt')
             with open(subMelted, 'w', encoding='utf-8') as fouput:
                 for line in finput:
                     if line and not line[0].isdigit() and line != '\n':
