@@ -85,7 +85,6 @@ def main():
             subMelted = os.path.join(dir, srtfile[:-4] + '.word' + lan + '.srt')
             for index, line in enumerate(finput):
                 if line and not line[0].isdigit() and line != '\n':
-                    print("processing line #%s with words..." % index)
                     words = re.split(r"[^a-zA-Z']+", line)
                     hasUnknown = False
                     meanning =''
@@ -104,7 +103,6 @@ def main():
                         with open(subMelted, 'a', encoding='utf-8') as fouput:
                             fouput.write(meanning)
                 else:
-                    print("No words or lines in line #%s!" % index)
                     with open(subMelted, 'a', encoding='utf-8') as fouput:
                         fouput.write(line)
 
