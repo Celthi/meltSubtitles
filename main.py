@@ -62,6 +62,7 @@ def main():
     ## parse argument
     args = parse_args()
     subtitle = args.subtitle
+    sectime = args.sec
 
     ##
     ## build the words repo
@@ -79,17 +80,22 @@ def main():
             subMelted = srtfile[:-4] + '.word' + lan + '.srt'
             with open(subMelted, 'w', encoding='utf-8') as fouput:
                 for line in finput:
-                    if line and not line[0].isdigit():
+                    if line and not line[0].isdigit() and line != '\n':
                         words = re.split(r"[^a-zA-Z']+", line)
+                        hasUnknown = False
+                        meanning =''
                         for word in words:
                             if word and word[0].islower() and word not in wordsRepo and "'" not in word:
-                                meanning =''
+                                hasUnknown = True
                                 if args.ch:
-                                    meanning = translate2chinese(word)
+                                    meanning += word + ": " + translate2chinese(word) + '\n'
                                 else:
-                                    meanning = translate2english(word)
-                                fouput.write(word+": "+meanning)
-                        fouput.write('\n')
+                                    meanning += word + ": " + translate2english(word) + '\n'
+
+                        if hasUnknown:
+                            if not sectime:
+                                fouput.write(line)
+                            fouput.write(meanning)
                     else:
                         fouput.write(line)
 

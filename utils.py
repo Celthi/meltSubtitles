@@ -15,6 +15,18 @@ def parse_args():
                         nargs='+',
                         help='subtitle')
 
+    parser.add_argument('-e',
+                        dest='ch',
+                        action='store_false',
+                        default=True,
+                        help='指定中文释义还是英文释义')
+
+    parser.add_argument('-2',
+                        dest='sec',
+                        action='store_true',
+                        default=False,
+                        help='是否二刷')
+
     parser.add_argument('-w',
                         dest='wordsrepo',
                         action='store',
