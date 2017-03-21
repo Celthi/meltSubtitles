@@ -5,6 +5,8 @@
 可以选择只保留生词和释义。
 
 生词是是指词库以外的单词，所以每个人的生词库是不一样的，可以自己寻找适合自己的词库。
+## Introduction
+Meltsubtitles take the subtitles *.srt in and spill out  new subtitles in which the English words that you already know will be removed and it will provide the meaning of the words you don't know.
 
 ## 思路
     1. 词库假定是你认识的单词 
