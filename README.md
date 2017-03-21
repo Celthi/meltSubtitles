@@ -1,6 +1,17 @@
 # Melt subtitles(融化字幕)
 
-[只留字幕中的生词，并翻译](https://zhuanlan.zhihu.com/p/25854872)
+只留具有生词的字幕，并给出生词的释义，[思路来源](https://zhuanlan.zhihu.com/p/25854872)
+
+可以选择只保留生词和释义。
+
+生词是是指词库以外的单词，所以每个人的生词库是不一样的，可以自己寻找适合自己的词库。
+
+## 效果
+![原始](img/ori.jpg)
+ 
+![给出生词释义](img/cn.jpg)
+
+![二刷](img/sec.jpg)
 
 
 ## 思路
@@ -21,6 +32,7 @@
     或者对多个字幕转换 python main.py *.srt 
    
     如果希望是英文释义，在命令行加上 "-e"
+    如果是二刷，在命令行加上 "-2"
 
 ## 词库有[5000](http://www.wordfrequency.info/free.asp),[10000](https://github.com/first20hours/google-10000-english)
 
@@ -32,3 +44,4 @@
 
 3. [ ] 可以放到一个网页，使用的人可以不用安装python，只需上传下载。
 4. [ ] 可以用map函数式的思想减少for的使用
+5. [ ] 如果有人需要，可以打包成exe，这样就不用安装Python。
