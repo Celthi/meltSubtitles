@@ -83,25 +83,29 @@ def main():
             if not args.ch:
                 lan = 'en'
             subMelted = os.path.join(dir, srtfile[:-4] + '.word' + lan + '.srt')
-            with open(subMelted, 'w', encoding='utf-8') as fouput:
-                for line in finput:
-                    if line and not line[0].isdigit() and line != '\n':
-                        words = re.split(r"[^a-zA-Z']+", line)
-                        hasUnknown = False
-                        meanning =''
-                        for word in words:
-                            if word and word[0].islower() and word not in wordsRepo and "'" not in word:
-                                hasUnknown = True
-                                if args.ch:
-                                    meanning += word + ": " + translate2chinese(word) + '\n'
-                                else:
-                                    meanning += word + ": " + translate2english(word) + '\n'
+            for index, line in enumerate(finput):
+                if line and not line[0].isdigit() and line != '\n':
+                    print("processing line #%s with words..." % index)
+                    words = re.split(r"[^a-zA-Z']+", line)
+                    hasUnknown = False
+                    meanning =''
+                    for word in words:
+                        if word and word[0].islower() and word not in wordsRepo and "'" not in word:
+                            hasUnknown = True
+                            if args.ch:
+                                meanning += word + ": " + translate2chinese(word) + '\n'
+                            else:
+                                meanning += word + ": " + translate2english(word) + '\n'
 
-                        if hasUnknown:
-                            if not sectime:
+                    if hasUnknown:
+                        if not sectime:
+                            with open(subMelted, 'a', encoding='utf-8') as fouput:
                                 fouput.write(line)
+                        with open(subMelted, 'a', encoding='utf-8') as fouput:
                             fouput.write(meanning)
-                    else:
+                else:
+                    print("No words or lines in line #%s!" % index)
+                    with open(subMelted, 'a', encoding='utf-8') as fouput:
                         fouput.write(line)
 
 
