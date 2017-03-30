@@ -46,7 +46,7 @@ Meltsubtitles take the subtitles *.srt in and spill out  new subtitles in which 
 
 2. [x] 批量转换
 
-3. [ ] 可以放到一个网页，使用的人可以不用安装python，只需上传下载。
+3. [ ] 可以放到一个网页，使用的人可以不用安装python，只需上传下载。有一个还没长大的[网页版本](http://meltsubtitles.azurewebsites.net/)
 4. [ ] 可以用map函数式的思想减少for的使用
 5. [ ] 如果有人需要，可以打包成exe，这样就不用安装Python。
 5. [ ] 如果有需要，可以将生词导出到一个文件中，用于以后记忆，或者导入查词软件，比如有道的单词本里，用于自己日后复习。
