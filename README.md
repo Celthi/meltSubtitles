@@ -30,7 +30,7 @@ Meltsubtitles take the subtitles *.srt in and spill out  new subtitles in which 
 
     如果指定单词库，单词库在文件夹wordsRepo, 加上"-w wordsRepo/文件", 默认使用5000的。
     
-    如果指定文件夹,命令行加上"--path 文件夹"
+    如果指定生成的字幕存储的文件夹,命令行加上"--path 文件夹"
    
     或者对多个字幕转换 python main.py *.srt 
    
