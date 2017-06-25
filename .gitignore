@@ -2,11 +2,13 @@
 *.pyo
 *~
 py2exe.log
+__pycache__
+__pycache__/*
 *.kate-swp
 *.egg-info
-*.srt
 *.sbv
 *.vtt
+*.srt
 *.flv
 *.mp4
 *.m4a
