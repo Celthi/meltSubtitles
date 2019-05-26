@@ -18,13 +18,14 @@ def mkdir(path, mode=0o777):
         else:
             raise
 
+
 def parse_args():
     """
 
     :return args:
     """
 
-    parser = argparse.ArgumentParser(description = 'melt subtitles')
+    parser = argparse.ArgumentParser(description='melt subtitles')
 
     parser.add_argument('subtitle',
                         nargs='+',
@@ -54,6 +55,11 @@ def parse_args():
                         action='store',
                         default='.',
                         help='path to save the files')
+    parser.add_argument('-u',
+                        dest='words',
+                        action='store',
+                        default='./unfamilarWords',
+                        help='file to save unfamilar words')
 
     parser.add_argument('-o',
                         '--overwrite',

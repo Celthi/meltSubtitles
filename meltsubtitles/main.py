@@ -74,7 +74,9 @@ def run(config):
             if not config['ch']:
                 lan = 'en'
             subMelted = os.path.join(
-                config['dir'], srtfile[:-4] + '.word' + lan + '.srt')
+                config['dir'], srtfile[:-4] + '.word.' + lan + '.srt')
+            unfamilar = os.path.join(
+                config['words'], "unknown." + '.word.' + lan + '.srt')
             for index, line in enumerate(finput):
                 if line and not line[0].isdigit() and line != '\n':
                     words = re.split(r"[^a-zA-Z']+", line)
@@ -96,6 +98,8 @@ def run(config):
                                 fouput.write(line)
                         with open(subMelted, 'a', encoding='utf-8') as fouput:
                             fouput.write(meanning)
+                        with open(unfamilar, 'a', encoding='utf-8') as unfamilarWords:
+                            unfamilarWords.write(meanning)
                 else:
                     with open(subMelted, 'a', encoding='utf-8') as fouput:
                         fouput.write(line)
@@ -115,7 +119,9 @@ def main():
     config['files'] = args.wordsrepo
     config['dir'] = args.path
     config['ch'] = args.ch
-
+    config['words'] = args.words
+    if not os.path.exists(config['words']):
+        mkdir(config['words'])
     if not os.path.exists(config['dir']):
         mkdir(config['dir'])
     run(config)

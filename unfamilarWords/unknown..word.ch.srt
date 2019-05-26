@@ -1,0 +1,51 @@
+compilers: n. 编译器；编译程式；编译工具（compiler的复数形式）
+compilers: n. 编译器；编译程式；编译工具（compiler的复数形式）
+interpreters: n. 解释器；直译程式；[计] 解释程序；口译者（interpreter的复数）
+compilers: 
+interpreters: n. 解释器；直译程式；[计] 解释程序；口译者（interpreter的复数）
+interpreter: n. 解释者；口译者；注释器
+interpreter: n. 解释者；口译者；注释器
+executes: 执行（法令）
+invoke: vt. 调用；祈求；引起；恳求
+interpreter: n. 解释者；口译者；注释器
+interpreter: n. 解释者；口译者；注释器
+executable: adj. 可执行的；可实行的
+executable: adj. 可执行的；可实行的
+bytecode: n. 字节码，字节代码；位元码
+executable: adj. 可执行的；可实行的
+executable: adj. 可执行的；可实行的
+recompile: v. 重新编译
+compilers: n. 编译器；编译程式；编译工具（compiler的复数形式）
+interpreters: n. 解释器；直译程式；[计] 解释程序；口译者（interpreter的复数）
+commercially: adv. 商业上；通商上
+exceeded: adj. 非常的；过度的；溢出的
+interpreter: n. 解释者；口译者；注释器
+interpreters: n. 解释器；直译程式；[计] 解释程序；口译者（interpreter的复数）
+disadvantages: n. 劣势；不利条件；损害（disadvantage的复数）
+disadvantages: n. 劣势；不利条件；损害（disadvantage的复数）
+slower: adj. 较慢的；慢一点的（slow的比较级）
+handwritten: adj. 手写的
+interpreter: n. 解释者；口译者；注释器
+slower: adj. 较慢的；慢一点的（slow的比较级）
+interpreter: n. 解释者；口译者；注释器
+incredibly: adv. 难以置信地；非常地
+interpreter: n. 解释者；口译者；注释器
+computations: n. [数] 计算；计算指令（computation的复数形式）
+formulas: n. [数] 公式；配方；规则（formula的复数）
+formulas: n. [数] 公式；配方；规则（formula的复数）
+formulas: n. [数] 公式；配方；规则（formula的复数）
+predicting: v. 预测（predict的ing形式）；预报；预言
+ecstatic: adj. 狂喜的；入迷的
+abstraction: n. 抽象；提取；抽象概念；空想；心不在焉
+grasp: v. 抓牢，握紧；试图抓住；理解，领悟；毫不犹豫地抓住（机会）
+fruitful: adj. 富有成效的；多产的；果实结得多的
+compilers: n. 编译器；编译程式；编译工具（compiler的复数形式）
+profound: adj. 深厚的；意义深远的；渊博的
+compilers: n. 编译器；编译程式；编译工具（compiler的复数形式）
+outlines: n. 轮廓；概要（outline的复数）；大概描述
+lexical: adj. 词汇的；[语] 词典的；词典编纂的
+parsing: n. 语法分析；剖析
+syntactic: adj. 句法的；语法的；依据造句法的
+semantic: adj. 语义的；语义学的（等于semantical）
+semantic: adj. 语义的；语义学的（等于semantical）
+transformations: n. [晶体] 转变（transformation的复数形式）；转换
