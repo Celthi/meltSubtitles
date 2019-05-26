@@ -2,10 +2,11 @@ import requests
 import lxml.html as htmlparser
 import re
 import os
-from utils import  parse_args, mkdir
+from utils import parse_args, mkdir
 from wordsRepoProc import build_wordrepo
 
 __author__ = 'celhipc'
+
 
 def translate2chinese(word):
     """
@@ -20,9 +21,10 @@ def translate2chinese(word):
     htmltree = htmlparser.fromstring(webpage)
     meanningList = htmltree.xpath('//div[@class="trans-container"]/ul/li')
     if len(meanningList) != 0:
-        meanning = meanningList[0].text;
+        meanning = meanningList[0].text
 
     return meanning
+
 
 def translate2english(word):
     """
@@ -34,9 +36,10 @@ def translate2english(word):
     url = 'http://dict.youdao.com/search?q='
     webpage = get_page(url, word)
     htmltree = htmlparser.fromstring(webpage)
-    meanningList = htmltree.xpath('//*[@id="tEETrans"]/div/ul//*[@class="def"]')
+    meanningList = htmltree.xpath(
+        '//*[@id="tEETrans"]/div/ul//*[@class="def"]')
     if len(meanningList) != 0:
-        meanning = meanningList[0].text;
+        meanning = meanningList[0].text
 
     return meanning
 
@@ -54,6 +57,50 @@ def get_page(url, word):
     return response.content
 
 
+def run(config):
+    """
+    main process
+    """
+    ##
+    # build the words repo
+    wordsRepo = build_wordrepo(config['files'])
+    for subtitleFile in config['subtitle']:
+        if not subtitleFile.endswith('.srt'):
+            pass
+
+        srtfile = subtitleFile
+        with open(srtfile, 'r', encoding='utf-8') as finput:
+            lan = 'ch'
+            if not config['ch']:
+                lan = 'en'
+            subMelted = os.path.join(
+                config['dir'], srtfile[:-4] + '.word' + lan + '.srt')
+            for index, line in enumerate(finput):
+                if line and not line[0].isdigit() and line != '\n':
+                    words = re.split(r"[^a-zA-Z']+", line)
+                    hasUnknown = False
+                    meanning = ''
+                    for word in words:
+                        if word and word[0].islower() and word not in wordsRepo and "'" not in word:
+                            hasUnknown = True
+                            if config['ch']:
+                                meanning += word + ": " + \
+                                    translate2chinese(word) + '\n'
+                            else:
+                                meanning += word + ": " + \
+                                    translate2english(word) + '\n'
+
+                    if hasUnknown:
+                        if not config['sectime']:
+                            with open(subMelted, 'a', encoding='utf-8') as fouput:
+                                fouput.write(line)
+                        with open(subMelted, 'a', encoding='utf-8') as fouput:
+                            fouput.write(meanning)
+                else:
+                    with open(subMelted, 'a', encoding='utf-8') as fouput:
+                        fouput.write(line)
+
+
 def main():
     """
     main program
@@ -62,49 +109,16 @@ def main():
 
     # parse argument
     args = parse_args()
-    subtitle = args.subtitle
-    sectime = args.sec
-    files = args.wordsrepo
-    dir = args.path
+    config = {}
+    config['subtitle'] = args.subtitle
+    config['sectime'] = args.sec
+    config['files'] = args.wordsrepo
+    config['dir'] = args.path
+    config['ch'] = args.ch
 
-    if not os.path.exists(dir):
-        mkdir(dir)
-
-    ##
-    ## build the words repo
-    wordsRepo = build_wordrepo(files)
-    for subtitleFile in subtitle:
-        if not subtitleFile.endswith('.srt'):
-            pass
-
-        srtfile = subtitleFile
-        with open(srtfile, 'r', encoding='utf-8') as finput:
-            lan = 'ch'
-            if not args.ch:
-                lan = 'en'
-            subMelted = os.path.join(dir, srtfile[:-4] + '.word' + lan + '.srt')
-            for index, line in enumerate(finput):
-                if line and not line[0].isdigit() and line != '\n':
-                    words = re.split(r"[^a-zA-Z']+", line)
-                    hasUnknown = False
-                    meanning =''
-                    for word in words:
-                        if word and word[0].islower() and word not in wordsRepo and "'" not in word:
-                            hasUnknown = True
-                            if args.ch:
-                                meanning += word + ": " + translate2chinese(word) + '\n'
-                            else:
-                                meanning += word + ": " + translate2english(word) + '\n'
-
-                    if hasUnknown:
-                        if not sectime:
-                            with open(subMelted, 'a', encoding='utf-8') as fouput:
-                                fouput.write(line)
-                        with open(subMelted, 'a', encoding='utf-8') as fouput:
-                            fouput.write(meanning)
-                else:
-                    with open(subMelted, 'a', encoding='utf-8') as fouput:
-                        fouput.write(line)
+    if not os.path.exists(config['dir']):
+        mkdir(config['dir'])
+    run(config)
 
 
 if __name__ == '__main__':

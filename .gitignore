@@ -8,16 +8,13 @@ __pycache__/*
 *.egg-info
 *.sbv
 *.vtt
-*.srt
 *.flv
 *.mp4
 *.m4a
 *.m4v
 *.part
 *.swp
-test/testdata
 .tox
 .idea
 .idea/*
-bojack
-bojack/*
+
