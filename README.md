@@ -84,8 +84,9 @@ Meltsubtitles take the subtitles *.srt in and spill out  new subtitles in which 
 
 ## 安装和使用
 0. 安装python 2.7.9 以上，推荐[python 3.5](https://www.python.org/downloads/release/python-353)
-1. pip install -r requirements.txt 
-2. python main.py zimu.srt
+1. cd 到meltsubtiles 目录里面
+2. pip install -r requirements.txt 
+3. python main.py zimu.srt
 
 
     如果指定单词库，单词库在文件夹wordsRepo, 加上"-w wordsRepo/文件", 默认使用5000的。
@@ -109,4 +110,4 @@ Meltsubtitles take the subtitles *.srt in and spill out  new subtitles in which 
 3. [ ] 可以放到一个网页，使用的人可以不用安装python，只需上传下载。有一个还没长大的[网页版本](http://meltsubtitles.azurewebsites.net/)
 4. [ ] 可以用map函数式的思想减少for的使用
 5. [ ] 如果有人需要，可以打包成exe，这样就不用安装Python。
-5. [ ] 如果有需要，可以将生词导出到一个文件中，用于以后记忆，或者导入查词软件，比如有道的单词本里，用于自己日后复习。
+5. [x] 如果有需要，可以将生词导出到一个文件中，用于以后记忆，或者导入查词软件，比如有道的单词本里，用于自己日后复习。
