@@ -17,4 +17,7 @@ __pycache__/*
 .tox
 .idea
 .idea/*
+dist/*
+build/*
+
 
