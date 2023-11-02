@@ -47,7 +47,7 @@ def parse_args():
         action="store",
         default=".",
         help="path to save the files",
-        type=Path
+        type=Path,
     )
     parser.add_argument(
         "-u",

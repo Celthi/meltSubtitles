@@ -1,9 +1,10 @@
-import os
 import re
+from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 import lxml.html as htmlparser
 import requests
+
 from utils import parse_args
 from wordsRepoProc import build_word_repository
 
@@ -64,47 +65,43 @@ def run(config: Mapping[str, Any]):
     # build the words repo
     wordsRepo = build_word_repository(config["files"])
     for subtitleFile in config["subtitle"]:
-        if not subtitleFile.endswith(".srt"):
-            pass
+        srtfile: Path = subtitleFile
+        if srtfile.suffix != ".srt":
+            continue
 
-        srtfile = subtitleFile
-        with open(srtfile, "r", encoding="utf-8") as finput:
-            lan = {True: "ch", False: "en"}[config.get("ch", False)]
-            subMelted = os.path.join(
-                config["dir"], srtfile[:-4] + ".word." + lan + ".srt"
-            )
-            unfamilar = os.path.join(
-                config["words"], "unknown." + ".word." + lan + ".srt"
-            )
-            for index, line in enumerate(finput):
-                if line and not line[0].isdigit() and line != "\n":
-                    words = re.split(r"[^a-zA-Z']+", line)
-                    hasUnknown = False
-                    meanning = ""
-                    for word in words:
-                        if (
-                            word
-                            and word[0].islower()
-                            and word not in wordsRepo
-                            and "'" not in word
-                        ):
-                            hasUnknown = True
-                            if config["ch"]:
-                                meanning += word + ": " + translate2chinese(word) + "\n"
-                            else:
-                                meanning += word + ": " + translate2english(word) + "\n"
-
-                    if hasUnknown:
-                        if not config["sectime"]:
-                            with open(subMelted, "a", encoding="utf-8") as fouput:
-                                fouput.write(line)
-                        with open(subMelted, "a", encoding="utf-8") as fouput:
-                            fouput.write(meanning)
-                        with open(unfamilar, "a", encoding="utf-8") as unfamilarWords:
-                            unfamilarWords.write(meanning)
-                else:
-                    with open(subMelted, "a", encoding="utf-8") as fouput:
-                        fouput.write(line)
+        finput = srtfile.open("r", encoding="utf-8")
+        lan = {True: "ch", False: "en"}[config.get("ch", False)]
+        subMelted = Path(config["dir"]) / (srtfile.stem + ".word." + lan + ".srt")
+        unfamilar = Path(config["words"]) / ("unknown." + ".word." + lan + ".srt")
+        for index, line in enumerate(finput):
+            if not (line and not line[0].isdigit() and line != "\n"):
+                subMelted.open("a", encoding="utf-8").write(line)
+                continue
+            words = re.split(r"[^a-zA-Z']+", line)
+            meanning = []
+            for word in words:
+                if (
+                    word
+                    and word[0].islower()
+                    and word not in wordsRepo
+                    and "'" not in word
+                ):
+                    meanning.append(
+                        word
+                        + ": "
+                        + {True: translate2chinese, False: translate2english}[
+                            config.get("ch", False)
+                        ](word)
+                    )
+            if not meanning:
+                continue
+            if not config["sectime"]:
+                with open(subMelted, "a", encoding="utf-8") as fouput:
+                    fouput.write(line)
+            with open(subMelted, "a", encoding="utf-8") as fouput:
+                print("\n".join(meanning), file=fouput)
+            with open(unfamilar, "a", encoding="utf-8") as unfamilarWords:
+                print("\n".join(meanning), file=unfamilarWords)
 
 
 def main():
