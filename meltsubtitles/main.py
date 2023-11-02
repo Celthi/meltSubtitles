@@ -71,45 +71,47 @@ def run(config: Mapping[str, Any]):
         if srtfile.suffix != ".srt":
             continue
 
-        finput = srtfile.open("r", encoding="utf-8")
         lan = {True: "ch", False: "en"}[config.get("ch", False)]
-        subMelted = (config["dir"] / (srtfile.stem + ".word." + lan + ".srt")).open(
-            "w", encoding="utf-8"
-        )
-        unfamilar = (config["words"] / ("unknown." + ".word." + lan + ".srt")).open(
-            "w", encoding="utf-8"
-        )
-        log.info(subMelted)
-        log.info(unfamilar)
-        for index, line in enumerate(finput):
-            if line.strip() == "" or line[0].isdigit():
-                subMelted.write(line)
-                continue
-            log.info(index)
-            words = re.split(r"[^a-zA-Z']+", line)
-            log.info(words)
-            meanning = []
-            for word in words:
-                if (
-                    word
-                    and word[0].islower()
-                    and word not in wordsRepo
-                    and "'" not in word
-                ):
-                    meanning.append(
+        with (
+            srtfile.open("r", encoding="utf-8") as finput,
+            (config["dir"] / (srtfile.stem + ".word." + lan + ".srt")).open(
+                "w", encoding="utf-8"
+            ) as subMelted,
+            (config["words"] / ("unknown." + ".word." + lan + ".srt")).open(
+                "w", encoding="utf-8"
+            ) as unfamilar,
+        ):
+            log.info(subMelted)
+            log.info(unfamilar)
+            for index, line in enumerate(finput):
+                if line.strip() == "" or line[0].isdigit():
+                    subMelted.write(line)
+                    continue
+                log.info(index)
+                words = re.split(r"[^a-zA-Z']+", line)
+                log.info(words)
+                meanning = []
+                for word in words:
+                    if (
                         word
-                        + ": "
-                        + {True: translate2chinese, False: translate2english}[
-                            config.get("ch", False)
-                        ](word)
-                    )
-            log.info(meanning)
-            if not meanning:
-                continue
-            if not config["sectime"]:
-                subMelted.write(line)
-            print("\n".join(meanning), file=subMelted)
-            print("\n".join(meanning), file=unfamilar)
+                        and word[0].islower()
+                        and word not in wordsRepo
+                        and "'" not in word
+                    ):
+                        meanning.append(
+                            word
+                            + ": "
+                            + {True: translate2chinese, False: translate2english}[
+                                config.get("ch", False)
+                            ](word)
+                        )
+                log.info(meanning)
+                if not meanning:
+                    continue
+                if not config["sectime"]:
+                    subMelted.write(line)
+                print("\n".join(meanning), file=subMelted)
+                print("\n".join(meanning), file=unfamilar)
 
 
 def main():
