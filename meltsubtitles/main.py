@@ -1,5 +1,7 @@
+import logging
 import re
 from pathlib import Path
+from sys import stdout
 from typing import Any, List, Mapping
 
 import lxml.html as htmlparser
@@ -9,6 +11,11 @@ from utils import parse_args
 from wordsRepoProc import build_word_repository
 
 __author__ = "celhipc"
+
+log = logging.getLogger(__name__)
+log.setLevel(logging.INFO)
+log.addHandler(logging.StreamHandler(stdout))
+
 
 def translate2chinese(word: str) -> str:
     """
@@ -72,15 +79,15 @@ def run(config: Mapping[str, Any]):
         unfamilar = (config["words"] / ("unknown." + ".word." + lan + ".srt")).open(
             "w", encoding="utf-8"
         )
-        print(f"{subMelted =}")
-        print(f"{unfamilar =}")
+        log.info(subMelted)
+        log.info(unfamilar)
         for index, line in enumerate(finput):
             if line.strip() == "" or line[0].isdigit():
                 subMelted.write(line)
                 continue
-            print("cur", index)
+            log.info(index)
             words = re.split(r"[^a-zA-Z']+", line)
-            print("query ", words)
+            log.info(words)
             meanning = []
             for word in words:
                 if (
@@ -96,7 +103,7 @@ def run(config: Mapping[str, Any]):
                             config.get("ch", False)
                         ](word)
                     )
-            print("meaning", meanning)
+            log.info(meanning)
             if not meanning:
                 continue
             if not config["sectime"]:
