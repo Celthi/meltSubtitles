@@ -1,7 +1,6 @@
 import os
 import re
-from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Mapping, Sequence
 
 import lxml.html as htmlparser
 import requests
@@ -22,18 +21,16 @@ def translate2chinese(word):
     url = "http://dict.youdao.com/search?q="
     webpage = get_page(url, word)
     htmltree = htmlparser.fromstring(webpage)
-    meanningList = htmltree.xpath('//div[@class="trans-container"]/ul/li')
+    meanningList: Sequence = htmltree.xpath('//div[@class="trans-container"]/ul/li')
     if len(meanningList) != 0:
         meanning = meanningList[0].text
 
     return meanning
 
 
-def translate2english(word):
+def translate2english(word: str):
     """
     English meaning of the word
-    :param words:
-    :return:
     """
     meanning = ""
     url = "http://dict.youdao.com/search?q="
@@ -126,8 +123,8 @@ def main():
         "ch": args.ch,
         "words": args.words,
     }
-    Path(config["words"]).mkdir(parents=True, exist_ok=True)
-    Path(config["dir"]).mkdir(parents=True, exist_ok=True)
+    args.words.mkdir(parents=True, exist_ok=True)
+    args.path.mkdir(parents=True, exist_ok=True)
     run(config)
 
 

@@ -1,11 +1,11 @@
 import csv
 from pathlib import Path
-from typing import List
+from typing import Iterable
 
 __author__ = "celhipc"
 
 
-def build_word_repository(files: List[Path]):
+def build_word_repository(files: Iterable[Path]):
     """
     Build a set of the words which are known
     :param files: List of file paths
