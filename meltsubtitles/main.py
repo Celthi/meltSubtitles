@@ -1,11 +1,14 @@
-import requests
-import lxml.html as htmlparser
-import re
 import os
-from utils import parse_args, mkdir
-from wordsRepoProc import build_wordrepo
+import re
+from pathlib import Path
+from typing import Any, Mapping
 
-__author__ = 'celhipc'
+import lxml.html as htmlparser
+import requests
+from utils import parse_args
+from wordsRepoProc import build_word_repository
+
+__author__ = "celhipc"
 
 
 def translate2chinese(word):
@@ -15,8 +18,8 @@ def translate2chinese(word):
     :return meanning:
 
     """
-    meanning = ''
-    url = 'http://dict.youdao.com/search?q='
+    meanning = ""
+    url = "http://dict.youdao.com/search?q="
     webpage = get_page(url, word)
     htmltree = htmlparser.fromstring(webpage)
     meanningList = htmltree.xpath('//div[@class="trans-container"]/ul/li')
@@ -32,12 +35,11 @@ def translate2english(word):
     :param words:
     :return:
     """
-    meanning = ''
-    url = 'http://dict.youdao.com/search?q='
+    meanning = ""
+    url = "http://dict.youdao.com/search?q="
     webpage = get_page(url, word)
     htmltree = htmlparser.fromstring(webpage)
-    meanningList = htmltree.xpath(
-        '//*[@id="tEETrans"]/div/ul//*[@class="def"]')
+    meanningList = htmltree.xpath('//*[@id="tEETrans"]/div/ul//*[@class="def"]')
     if len(meanningList) != 0:
         meanning = meanningList[0].text
 
@@ -57,51 +59,54 @@ def get_page(url, word):
     return response.content
 
 
-def run(config):
+def run(config: Mapping[str, Any]):
     """
     main process
     """
     ##
     # build the words repo
-    wordsRepo = build_wordrepo(config['files'])
-    for subtitleFile in config['subtitle']:
-        if not subtitleFile.endswith('.srt'):
+    wordsRepo = build_word_repository(config["files"])
+    for subtitleFile in config["subtitle"]:
+        if not subtitleFile.endswith(".srt"):
             pass
 
         srtfile = subtitleFile
-        with open(srtfile, 'r', encoding='utf-8') as finput:
-            lan = 'ch'
-            if not config['ch']:
-                lan = 'en'
+        with open(srtfile, "r", encoding="utf-8") as finput:
+            lan = config.get("ch", "en")
             subMelted = os.path.join(
-                config['dir'], srtfile[:-4] + '.word.' + lan + '.srt')
+                config["dir"], srtfile[:-4] + ".word." + lan + ".srt"
+            )
             unfamilar = os.path.join(
-                config['words'], "unknown." + '.word.' + lan + '.srt')
+                config["words"], "unknown." + ".word." + lan + ".srt"
+            )
             for index, line in enumerate(finput):
-                if line and not line[0].isdigit() and line != '\n':
+                if line and not line[0].isdigit() and line != "\n":
                     words = re.split(r"[^a-zA-Z']+", line)
                     hasUnknown = False
-                    meanning = ''
+                    meanning = ""
                     for word in words:
-                        if word and word[0].islower() and word not in wordsRepo and "'" not in word:
+                        if (
+                            word
+                            and word[0].islower()
+                            and word not in wordsRepo
+                            and "'" not in word
+                        ):
                             hasUnknown = True
-                            if config['ch']:
-                                meanning += word + ": " + \
-                                    translate2chinese(word) + '\n'
+                            if config["ch"]:
+                                meanning += word + ": " + translate2chinese(word) + "\n"
                             else:
-                                meanning += word + ": " + \
-                                    translate2english(word) + '\n'
+                                meanning += word + ": " + translate2english(word) + "\n"
 
                     if hasUnknown:
-                        if not config['sectime']:
-                            with open(subMelted, 'a', encoding='utf-8') as fouput:
+                        if not config["sectime"]:
+                            with open(subMelted, "a", encoding="utf-8") as fouput:
                                 fouput.write(line)
-                        with open(subMelted, 'a', encoding='utf-8') as fouput:
+                        with open(subMelted, "a", encoding="utf-8") as fouput:
                             fouput.write(meanning)
-                        with open(unfamilar, 'a', encoding='utf-8') as unfamilarWords:
+                        with open(unfamilar, "a", encoding="utf-8") as unfamilarWords:
                             unfamilarWords.write(meanning)
                 else:
-                    with open(subMelted, 'a', encoding='utf-8') as fouput:
+                    with open(subMelted, "a", encoding="utf-8") as fouput:
                         fouput.write(line)
 
 
@@ -113,21 +118,20 @@ def main():
 
     # parse argument
     args = parse_args()
-    config = {}
-    config['subtitle'] = args.subtitle
-    config['sectime'] = args.sec
-    config['files'] = args.wordsrepo
-    config['dir'] = args.path
-    config['ch'] = args.ch
-    config['words'] = args.words
-    if not os.path.exists(config['words']):
-        mkdir(config['words'])
-    if not os.path.exists(config['dir']):
-        mkdir(config['dir'])
+    config = {
+        "subtitle": args.subtitle,
+        "sectime": args.sec,
+        "files": args.wordsrepo,
+        "dir": args.path,
+        "ch": args.ch,
+        "words": args.words,
+    }
+    Path(config["words"]).mkdir(parents=True, exist_ok=True)
+    Path(config["dir"]).mkdir(parents=True, exist_ok=True)
     run(config)
 
 
-if __name__ == '__main__':
-    print('procwssing subtitle')
+if __name__ == "__main__":
+    print("processing subtitle")
     main()
-    print('finished procwssing subtitle')
+    print("finished procwssing subtitle")
