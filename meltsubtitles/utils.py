@@ -17,7 +17,7 @@ def parse_args():
 
     parser = argparse.ArgumentParser(description="melt subtitles")
 
-    parser.add_argument("subtitle", nargs="+", help="subtitle", type=Path)
+    parser.add_argument("subtitle", nargs="+", help="subtitle")
 
     parser.add_argument(
         "-e",
@@ -25,11 +25,10 @@ def parse_args():
         action="store_false",
         default=True,
         help="指定中文释义还是英文释义",
-        type=bool,
     )
 
     parser.add_argument(
-        "-2", dest="sec", action="store_true", default=False, help="是否二刷", type=bool
+        "-2", dest="sec", action="store_true", default=False, help="是否二刷"
     )
 
     parser.add_argument(
@@ -48,7 +47,7 @@ def parse_args():
         action="store",
         default=".",
         help="path to save the files",
-        type=argparse.FileType("r"),
+        type=Path
     )
     parser.add_argument(
         "-u",
@@ -56,7 +55,7 @@ def parse_args():
         action="store",
         default="./unfamilarWords",
         help="file to save unfamilar words",
-        type=argparse.FileType("w"),
+        type=Path,
     )
 
     parser.add_argument(
@@ -66,7 +65,6 @@ def parse_args():
         action="store_true",
         default=False,
         help="whether existing files should be overwritten" " (default: False)",
-        type=bool,
     )
 
     args = parser.parse_args(namespace=_C)

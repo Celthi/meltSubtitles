@@ -69,7 +69,7 @@ def run(config: Mapping[str, Any]):
 
         srtfile = subtitleFile
         with open(srtfile, "r", encoding="utf-8") as finput:
-            lan = config.get("ch", "en")
+            lan = {True: "ch", False: "en"}[config.get("ch", False)]
             subMelted = os.path.join(
                 config["dir"], srtfile[:-4] + ".word." + lan + ".srt"
             )
