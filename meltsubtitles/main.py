@@ -1,6 +1,6 @@
 import re
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import Any, List, Mapping
 
 import lxml.html as htmlparser
 import requests
@@ -11,37 +11,33 @@ from wordsRepoProc import build_word_repository
 __author__ = "celhipc"
 
 
-def translate2chinese(word):
+def translate2chinese(word: str) -> str:
     """
     Chinese meaning of the word.
     :param word:
     :return meanning:
 
     """
-    meanning = ""
     url = "http://dict.youdao.com/search?q="
     webpage = get_page(url, word)
     htmltree = htmlparser.fromstring(webpage)
-    meanningList: Sequence = htmltree.xpath('//div[@class="trans-container"]/ul/li')
+    meanningList: List = htmltree.xpath('//div[@class="trans-container"]/ul/li')
     if len(meanningList) != 0:
-        meanning = meanningList[0].text
+        return ""
+    return meanningList[0].text
 
-    return meanning
 
-
-def translate2english(word: str):
+def translate2english(word: str) -> str:
     """
     English meaning of the word
     """
-    meanning = ""
     url = "http://dict.youdao.com/search?q="
     webpage = get_page(url, word)
     htmltree = htmlparser.fromstring(webpage)
     meanningList = htmltree.xpath('//*[@id="tEETrans"]/div/ul//*[@class="def"]')
-    if len(meanningList) != 0:
-        meanning = meanningList[0].text
-
-    return meanning
+    if len(meanningList) == 0:
+        return ""
+    return meanningList[0].text
 
 
 def get_page(url, word):
@@ -74,7 +70,7 @@ def run(config: Mapping[str, Any]):
         subMelted = Path(config["dir"]) / (srtfile.stem + ".word." + lan + ".srt")
         unfamilar = Path(config["words"]) / ("unknown." + ".word." + lan + ".srt")
         for index, line in enumerate(finput):
-            if not (line and not line[0].isdigit() and line != "\n"):
+            if not (line and not line[0].isdigit()) or line.strip() == "":
                 subMelted.open("a", encoding="utf-8").write(line)
                 continue
             words = re.split(r"[^a-zA-Z']+", line)
