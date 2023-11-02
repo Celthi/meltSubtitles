@@ -10,7 +10,6 @@ from wordsRepoProc import build_word_repository
 
 __author__ = "celhipc"
 
-
 def translate2chinese(word: str) -> str:
     """
     Chinese meaning of the word.
@@ -22,7 +21,7 @@ def translate2chinese(word: str) -> str:
     webpage = get_page(url, word)
     htmltree = htmlparser.fromstring(webpage)
     meanningList: List = htmltree.xpath('//div[@class="trans-container"]/ul/li')
-    if len(meanningList) != 0:
+    if len(meanningList) == 0:
         return ""
     return meanningList[0].text
 
@@ -67,13 +66,21 @@ def run(config: Mapping[str, Any]):
 
         finput = srtfile.open("r", encoding="utf-8")
         lan = {True: "ch", False: "en"}[config.get("ch", False)]
-        subMelted = Path(config["dir"]) / (srtfile.stem + ".word." + lan + ".srt")
-        unfamilar = Path(config["words"]) / ("unknown." + ".word." + lan + ".srt")
+        subMelted = (config["dir"] / (srtfile.stem + ".word." + lan + ".srt")).open(
+            "w", encoding="utf-8"
+        )
+        unfamilar = (config["words"] / ("unknown." + ".word." + lan + ".srt")).open(
+            "w", encoding="utf-8"
+        )
+        print(f"{subMelted =}")
+        print(f"{unfamilar =}")
         for index, line in enumerate(finput):
-            if not (line and not line[0].isdigit()) or line.strip() == "":
-                subMelted.open("a", encoding="utf-8").write(line)
+            if line.strip() == "" or line[0].isdigit():
+                subMelted.write(line)
                 continue
+            print("cur", index)
             words = re.split(r"[^a-zA-Z']+", line)
+            print("query ", words)
             meanning = []
             for word in words:
                 if (
@@ -89,15 +96,13 @@ def run(config: Mapping[str, Any]):
                             config.get("ch", False)
                         ](word)
                     )
+            print("meaning", meanning)
             if not meanning:
                 continue
             if not config["sectime"]:
-                with open(subMelted, "a", encoding="utf-8") as fouput:
-                    fouput.write(line)
-            with open(subMelted, "a", encoding="utf-8") as fouput:
-                print("\n".join(meanning), file=fouput)
-            with open(unfamilar, "a", encoding="utf-8") as unfamilarWords:
-                print("\n".join(meanning), file=unfamilarWords)
+                subMelted.write(line)
+            print("\n".join(meanning), file=subMelted)
+            print("\n".join(meanning), file=unfamilar)
 
 
 def main():
@@ -124,4 +129,4 @@ def main():
 if __name__ == "__main__":
     print("processing subtitle")
     main()
-    print("finished procwssing subtitle")
+    print("finished processing subtitle")

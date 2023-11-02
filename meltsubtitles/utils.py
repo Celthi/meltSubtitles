@@ -17,7 +17,7 @@ def parse_args():
 
     parser = argparse.ArgumentParser(description="melt subtitles")
 
-    parser.add_argument("subtitle", nargs="+", help="subtitle")
+    parser.add_argument("subtitle", nargs="+", help="subtitle", type=Path)
 
     parser.add_argument(
         "-e",
