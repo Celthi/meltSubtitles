@@ -7,14 +7,16 @@ from typing import Any, List, Mapping
 import lxml.html as htmlparser
 import requests
 
-from utils import parse_args
-from wordsRepoProc import build_word_repository
+from .utils import parse_args
+from .wordsRepoProc import build_word_repository
 
-__author__ = "celhipc"
+__author__ = ["celhipc", "asuka minato"]
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.INFO)
 log.addHandler(logging.StreamHandler(stdout))
+
+words_pattern = re.compile(r"[^a-zA-Z']+")
 
 
 def translate2chinese(word: str) -> str:
@@ -46,11 +48,9 @@ def translate2english(word: str) -> str:
     return meanningList[0].text
 
 
-def get_page(url, word):
+def get_page(url: str, word: str):
     """
     get the translation webpage
-    :param url:
-    :param word:
     :return webpage:
     """
 
@@ -88,7 +88,7 @@ def run(config: Mapping[str, Any]):
                     subMelted.write(line)
                     continue
                 log.info(index)
-                words = re.split(r"[^a-zA-Z']+", line)
+                words = re.split(words_pattern, line)
                 log.info(words)
                 meanning = []
                 for word in words:
