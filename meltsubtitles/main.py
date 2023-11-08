@@ -3,12 +3,12 @@ import re
 from pathlib import Path
 from sys import stdout
 from typing import Any, List, Mapping
-
+import time
 import lxml.html as htmlparser
 import requests
 
-from .utils import parse_args
-from .wordsRepoProc import build_word_repository
+from utils import parse_args
+from wordsRepoProc import build_word_repository
 
 __author__ = ["celhipc", "asuka minato"]
 
@@ -137,5 +137,9 @@ def main():
 
 if __name__ == "__main__":
     print("processing subtitle")
+    # time the main
+    start = time.time()
     main()
+    end = time.time()
+    print("time used: ", (end - start)/60, "min")
     print("finished processing subtitle")
