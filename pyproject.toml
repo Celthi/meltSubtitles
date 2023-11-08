@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "meltsubtitles"
+version = "0.1.0"
+description = "A utility to process subtitles."
+authors = ["Evan_L00@qq.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.25.1"
+lxml = "^4.6.3"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = [
+    "tests"
+]
