@@ -8,7 +8,7 @@ Melt subtitles(融化字幕)
 生词是是指词库以外的单词，所以每个人的生词库是不一样的，可以自己寻找适合自己的词库。
 Introduction
 ====
-Meltsubtitles take the subtitles *.srt in and spill out  new subtitles in which the English words that you already know will be removed and it will provide the meaning of the words you don't know.
+Meltsubtitles takes the subtitles *.srt in and spilsl out new subtitles in which the English words that you already know will be removed and it will provide the meaning of the words you don't know.
 
 思路
 ====
@@ -16,7 +16,6 @@ Meltsubtitles take the subtitles *.srt in and spill out  new subtitles in which 
     2. 将字幕里在词库中的单词去掉，
     3. 通过查询有道网页得到生词的释义
     4. 将释义加入到新的字幕文件中，
-    5. done
 
 效果
 ====
@@ -52,7 +51,7 @@ To do
 ====
 1. [x] 英文释义选择
 2. [x] 批量转换
-3. [ ] 可以放到一个网页，使用的人可以不用安装python，只需上传下载。
+3. [x] 可以放到一个网页，使用的人可以不用安装python，只需上传下载。[旧网址] (http://meltsubtitles.azurewebsites.net/)
 4. [ ] 可以用map函数式的思想减少for的使用
 5. [ ] 如果有人需要，可以打包成exe，这样就不用安装Python。
 5. [x] 如果有需要，可以将生词导出到一个文件中，用于以后记忆，或者导入查词软件，比如有道的单词本里，用于自己日后复习。
