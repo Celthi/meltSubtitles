@@ -1,4 +1,5 @@
-__author__ = 'celhipc'
+__author__ = "celhipc"
+
 
 def sstparser():
     """

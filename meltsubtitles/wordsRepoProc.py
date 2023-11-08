@@ -1,25 +1,22 @@
 import csv
-import sys
+from pathlib import Path
+from typing import Iterable
+
+__author__ = "celhipc"
 
 
-__author__ = 'celhipc'
-
-
-def build_wordrepo(files):
+def build_word_repository(files: Iterable[Path]):
     """
-    build a set of the words which are known
-    :param file:
-    :return wordsrepo: a set
+    Build a set of the words which are known
+    :param files: List of file paths
+    :return words_repo: A set
     """
-    wordsRepo = set()
+    words_repo = set()
 
-    for file in files:
-        with open(file, 'r') as finput:
-            reader = csv.reader(finput)
+    for file_path in files:
+        with open(file_path, "r") as file_input:
+            reader = csv.reader(file_input)
             for words in reader:
-                wordsRepo |= set(words)
+                words_repo.update(words)
 
-    return wordsRepo
-
-
-
+    return words_repo
